@@ -6,17 +6,12 @@ def copyToAnsible() {
 
         def destinationPath = ~/ansible-jenkins.pem
 
-        if (!fileExists(destinationPath)) {
-            withCredentials([sshUserPrivateKey(
-            credentialsId: 'ec2-server-key',
-            keyFileVariable: 'keyfile',
-            usernameVariable: 'user'
-            )]) {
-                sh 'scp $keyfile ec2-user@13.200.237.65:$destinationPath'
-            }
-        }
-        else {
-            echo "SSH key already exists"
+        withCredentials([sshUserPrivateKey(
+        credentialsId: 'ec2-server-key',
+        keyFileVariable: 'keyfile',
+        usernameVariable: 'user'
+        )]) {
+            sh 'scp $keyfile ec2-user@13.200.237.65:$destinationPath'
         }
     }
 }
