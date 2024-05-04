@@ -1,21 +1,22 @@
 def copyToAnsible() {
-    def copied = false
-
     echo "copying all necessary files to ansible control node server"
 
     sshagent(['ansible-server-key']) {
         sh "scp -o StrictHostKeyChecking=no ansible/* ec2-user@13.200.237.65:~/"
 
-        if (!copied) {
+        def destinationPath = ~/ansible-jenkins.pem
+
+        if (!fileExists(destinationPath)) {
             withCredentials([sshUserPrivateKey(
             credentialsId: 'ec2-server-key',
             keyFileVariable: 'keyfile',
             usernameVariable: 'user'
             )]) {
-                sh 'scp $keyfile ec2-user@13.200.237.65:~/ansible-jenkins.pem'
+                sh 'scp $keyfile ec2-user@13.200.237.65:$destinationPath'
             }
-
-            copied = true
+        }
+        else {
+            echo "SSH key already exists"
         }
     }
 }
