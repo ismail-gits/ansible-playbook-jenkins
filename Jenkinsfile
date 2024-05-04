@@ -18,7 +18,7 @@ pipeline {
                             keyFileVariable: 'keyfile',
                             usernameVariable: 'user'
                         )]) {
-                                sh "scp ${keyfile} ec2-user@13.200.237.65:~/ansible-jenkins.pem"
+                                sh 'scp $keyfile ec2-user@13.200.237.65:~/ansible-jenkins.pem'
                         }
                     }
                 }
