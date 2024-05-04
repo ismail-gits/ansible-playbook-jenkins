@@ -9,8 +9,8 @@ pipeline {
         stage('init') {
             steps {
                 script {
+                    echo "loading script.groovy"
                     gv = load "script.groovy"
-                     echo "Executing pipeline for branch $BRANCH_NAME"
                 }
             }
         }
