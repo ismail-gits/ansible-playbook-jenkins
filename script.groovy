@@ -1,6 +1,6 @@
-def copied = false
-
 def copyToAnsible() {
+    def copied = false
+
     echo "copying all necessary files to ansible control node server"
 
     sshagent(['ansible-server-key']) {
