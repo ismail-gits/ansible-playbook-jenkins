@@ -3,15 +3,13 @@ def copyToAnsible() {
 
     sshagent(['ansible-server-key']) {
         sh "scp -o StrictHostKeyChecking=no ansible/* ec2-user@13.200.237.65:~/"
-
-        def destinationPath = ~/ansible-jenkins.pem
-
+        
         withCredentials([sshUserPrivateKey(
         credentialsId: 'ec2-server-key',
         keyFileVariable: 'keyfile',
         usernameVariable: 'user'
         )]) {
-            sh 'scp $keyfile ec2-user@13.200.237.65:$destinationPath'
+            sh 'scp $keyfile ec2-user@13.200.237.65:~/ansible-jenkins.pem'
         }
     }
 }
