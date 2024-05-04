@@ -3,7 +3,7 @@ def copyToAnsible() {
 
     sshagent(['ansible-server-key']) {
         sh "scp -o StrictHostKeyChecking=no ansible/* ec2-user@13.200.237.65:~/"
-        
+
         withCredentials([sshUserPrivateKey(
         credentialsId: 'ec2-server-key',
         keyFileVariable: 'keyfile',
@@ -31,6 +31,7 @@ def executeAnsiblePlaybook() {
         remote.identityFile = keyfile
 
         sshCommand remote: remote, command: "ls -l"
+        sshCommand remote: remote, command: "ansible-playbook playbook.yaml"
     }
 }
 
